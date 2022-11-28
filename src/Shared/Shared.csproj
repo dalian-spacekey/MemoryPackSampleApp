@@ -1,0 +1,32 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net7.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <AllowUnsafeBlocks>True</AllowUnsafeBlocks>
+  </PropertyGroup>
+
+  <ItemGroup>
+      <CompilerVisibleProperty Include="MemoryPackGenerator_TypeScriptOutputDirectory" />
+      <CompilerVisibleProperty Include="MemoryPackGenerator_TypeScriptImportExtension" />
+      <CompilerVisibleProperty Include="MemoryPackGenerator_TypeScriptConvertPropertyName" />
+  </ItemGroup>
+  <PropertyGroup>
+      <MemoryPackGenerator_TypeScriptOutputDirectory>$(MSBuildProjectDirectory)\..\Web\src\models\MemoryPack</MemoryPackGenerator_TypeScriptOutputDirectory>
+	  <!-- allows empty -->
+	  <MemoryPackGenerator_TypeScriptImportExtension></MemoryPackGenerator_TypeScriptImportExtension>
+	  <MemoryPackGenerator_TypeScriptConvertPropertyName>true</MemoryPackGenerator_TypeScriptConvertPropertyName>
+	  <RootNamespace>SampleApp.Shared</RootNamespace>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="MemoryPack" Version="1.8.10" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="7.0.0" />
+    <PackageReference Include="UnitGenerator" Version="1.4.10">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+  </ItemGroup>
+
+</Project>
