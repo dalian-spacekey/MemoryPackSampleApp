@@ -1,5 +1,7 @@
 # MemoryPack Sample App
 
+まずは、ASP.NET CoreのサーバーとNuxtでのやりとりはこうなるんじゃないかというサンプル。
+
 ## 構成
 
 * Server: ASP.NET Core + Entity Framework Core(SQLite)
