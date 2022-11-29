@@ -50,7 +50,7 @@ public class MessagesController : ControllerBase
     }
 
     [HttpPost]
-    public async Task<IActionResult> Add([FromBody] Message data)
+    public async Task<IActionResult> Add([FromBody] MessageForCSharp data)
     {
         await using var db = await dbFactory.CreateDbContextAsync();
         var repository = db.GetMessageRepository();
@@ -65,7 +65,7 @@ public class MessagesController : ControllerBase
     }
 
     [HttpPut]
-    public async Task<IActionResult> Update([FromBody] Message data)
+    public async Task<IActionResult> Update([FromBody] MessageForCSharp data)
     {
         if (data.MessageId == MessageId.Empty)
         {

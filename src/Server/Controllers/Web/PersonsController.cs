@@ -70,7 +70,7 @@ public class PersonsController : ControllerBase
     }
 
     [HttpPost]
-    public async Task<IActionResult> Add([FromBody] Person item)
+    public async Task<IActionResult> Add([FromBody] PersonForTypeScript item)
     {
         await using var db = await dbFactory.CreateDbContextAsync();
         var repository = db.GetPersonRepository();
@@ -96,7 +96,7 @@ public class PersonsController : ControllerBase
     }
 
     [HttpPut]
-    public async Task<IActionResult> Update([FromBody] Person item)
+    public async Task<IActionResult> Update([FromBody] PersonForTypeScript item)
     {
         if (item.PersonId == Guid.Empty)
         {

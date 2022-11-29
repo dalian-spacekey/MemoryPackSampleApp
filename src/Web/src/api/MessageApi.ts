@@ -4,6 +4,7 @@ import { MessageForTypeScript } from '~/models';
 export interface IMessageApi {
     getAll(): Promise<MessageForTypeScript[]>;
     get(messageId: number): Promise<MessageForTypeScript>;
+    update(params: MessageForTypeScript): Promise<void>;
 }
 
 export class MessageApiForJson implements IMessageApi {
@@ -25,6 +26,10 @@ export class MessageApiForJson implements IMessageApi {
         console.log(`[JSON]getMessages/${messageId}: ${Math.floor(endTime - startTime)}ms`);
         
         return response.data as MessageForTypeScript;
+    }
+    
+    async update (params: MessageForTypeScript): Promise<void> {
+        await this.axios.put('messages', params);
     }
 }
 
@@ -49,5 +54,10 @@ export class MessageApiForMemoryPack implements IMessageApi {
         console.log(`[MemoryPack]getPerson/${messageId}: ${Math.floor(endTime - startTime)}ms`);
         
         return message;
+    }
+
+    async update (params: MessageForTypeScript): Promise<void> {
+        var payload = MessageForTypeScript.serialize(params);
+        await this.axios.put('messages', payload);
     }
 }

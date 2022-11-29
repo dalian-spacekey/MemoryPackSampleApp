@@ -53,7 +53,7 @@ public class MessagesController : ControllerBase
     }
 
     [HttpPost]
-    public async Task<IActionResult> Add([FromBody] Message data)
+    public async Task<IActionResult> Add([FromBody] MessageForTypeScript data)
     {
         await using var db = await dbFactory.CreateDbContextAsync();
         var repository = db.GetMessageRepository();
@@ -68,9 +68,9 @@ public class MessagesController : ControllerBase
     }
 
     [HttpPut]
-    public async Task<IActionResult> Update([FromBody] Message data)
+    public async Task<IActionResult> Update([FromBody] MessageForTypeScript data)
     {
-        if (data.MessageId == MessageId.Empty)
+        if (data.MessageId == 0)
         {
             return BadRequest();
         }
@@ -80,7 +80,7 @@ public class MessagesController : ControllerBase
 
         await repository.UpdateAsync(new Message
         {
-            MessageId = data.MessageId,
+            MessageId = new MessageId(data.MessageId),
             Title = data.Title,
             Contents = data.Contents
         });

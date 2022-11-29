@@ -40,6 +40,11 @@ export default class MessageStore extends VuexModule {
     }
 
     @Action
+    async updateJson (message: MessageForTypeScript) {
+        await messageApiForJson.update(message);
+    }
+
+    @Action
     async getMessagesMemoryPack() {
         const data = await messageApiForMemoryPack.getAll();
 
@@ -54,5 +59,10 @@ export default class MessageStore extends VuexModule {
         if (!m) throw Error();
 
         this.setMessage(m);
+    }
+
+    @Action
+    async updateMemoryPack (message: MessageForTypeScript) {
+        await messageApiForMemoryPack.update(message);
     }
 }

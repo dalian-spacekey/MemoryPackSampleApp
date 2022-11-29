@@ -60,6 +60,8 @@ public class MessageRepository : RepositoryBase
 
         message.Title = item.Title;
         message.Contents = item.Contents;
+
+        await Context.SaveChangesAsync(cancellationToken);
     }
 
     public async Task DeleteAsync(MessageId id, CancellationToken cancellationToken = default)

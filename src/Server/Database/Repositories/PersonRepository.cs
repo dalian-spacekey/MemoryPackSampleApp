@@ -71,6 +71,8 @@ public class PersonRepository : RepositoryBase
         person.CompanyName = item.CompanyName;
         person.ApplicationDate = item.ApplicationDate;
         person.WithdrawalDate = item.WithdrawalDate;
+
+        await Context.SaveChangesAsync(cancellationToken);
     }
 
     public async Task DeleteAsync(Guid personId, CancellationToken cancellationToken = default)
