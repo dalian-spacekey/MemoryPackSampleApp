@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:viewModels="clr-namespace:SampleApp.Mobile.ViewModels"
+             x:Class="SampleApp.Mobile.Views.MessageDetailPage"
+             x:DataType="viewModels:MessageDetailPageViewModel"
+             Title="MessageDetail">
+    <VerticalStackLayout
+        Margin="10">
+        <Label 
+            Text="{Binding Message.Title}"
+            FontSize="20"/>
+
+        <Label
+            Text="{Binding Message.PublishDate}"
+            HorizontalOptions="End"/>
+
+        <Label
+            Text="{Binding Message.Contents}"
+            Margin="0,20"/>
+    </VerticalStackLayout>
+</ContentPage>

@@ -18,14 +18,14 @@ public class MessagesController : ControllerBase
     }
 
     [HttpGet]
-    public async Task<MessageForTypeScript[]> GetAll([FromQuery]int page = 0, [FromQuery]int pageSize = 0)
+    public async Task<MessageForTypeScript2[]> GetAll([FromQuery]int page = 0, [FromQuery]int pageSize = 0)
     {
 		await using var db = await dbFactory.CreateDbContextAsync();
 		var repository = db.GetMessageRepository();
 		var messages = await repository.GetAllAsync(page, pageSize);
 
 		return messages
-            .Select(message => new MessageForTypeScript
+            .Select(message => new MessageForTypeScript2
             {
                 MessageId = message.MessageId.AsPrimitive(),
                 Title = message.Title,

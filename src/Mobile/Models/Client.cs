@@ -1,17 +1,29 @@
-﻿using MemoryPack;
-using System.Text.Json;
+﻿using System.Text.Json;
+using MemoryPack;
+using SampleApp.Shared;
 
-namespace SampleApp.Shared;
+namespace SampleApp.Mobile.Models;
 
 public abstract class Client
 {
+#if ANDROID
+    static readonly string BaseAddress = "https://10.0.2.2:7287/maui/";
+#elif IOS
+    static readonly string BaseAddress = "https://192.168.1.106:7288/maui/";
+#else
     static readonly string BaseAddress = "https://localhost:7287/maui/";
+#endif
     readonly HttpClient httpClient;
     protected abstract string ContentType { get; }
 
     protected Client()
     {
-        httpClient = new HttpClient { BaseAddress = new Uri(BaseAddress) };
+#if DEBUG
+        var handler = new HttpsClientHandlerService();
+        httpClient = new HttpClient(handler.GetPlatformMessageHandler()) { BaseAddress = new Uri(BaseAddress) };
+#else
+        httpClient = new HttpClient() { BaseAddress = new Uri(BaseAddress) };
+#endif
     }
 
     protected abstract Task<HttpContent> SerializeAsync<T>(T obj, CancellationToken cancellationToken = default);
@@ -32,12 +44,12 @@ public abstract class Client
         }
 
         var stream = await response.Content.ReadAsStreamAsync(cancellationToken);
-        var messages = await DeserializeAsync<MessageForCSharp[]?>(stream, cancellationToken);
+        var messages = await DeserializeAsync<MessageForCSharp[]>(stream, cancellationToken);
 
         return messages ?? Array.Empty<MessageForCSharp>();
     }
 
-    public async Task<MessageForCSharp?> GetMessageAsync(
+    public async Task<MessageForCSharp> GetMessageAsync(
         MessageId messageId,
         CancellationToken cancellationToken = default)
     {
@@ -51,7 +63,7 @@ public abstract class Client
         }
 
         var stream = await response.Content.ReadAsStreamAsync(cancellationToken);
-        var message = await DeserializeAsync<MessageForCSharp?>(stream, cancellationToken);
+        var message = await DeserializeAsync<MessageForCSharp>(stream, cancellationToken);
 
         return message ?? null;
     }
@@ -104,7 +116,7 @@ public abstract class Client
     // Person
 
     public async Task<PersonForCSharp[]> GetPersonsAsync(
-    CancellationToken cancellationToken = default)
+        CancellationToken cancellationToken = default)
     {
         var request = new HttpRequestMessage(HttpMethod.Get, "persons");
         request.Headers.Add("Accept", ContentType);
@@ -116,12 +128,12 @@ public abstract class Client
         }
 
         var stream = await response.Content.ReadAsStreamAsync(cancellationToken);
-        var persons = await DeserializeAsync<PersonForCSharp[]?>(stream, cancellationToken);
+        var persons = await DeserializeAsync<PersonForCSharp[]>(stream, cancellationToken);
 
         return persons ?? Array.Empty<PersonForCSharp>();
     }
 
-    public async Task<PersonForCSharp?> GetPersonAsync(
+    public async Task<PersonForCSharp> GetPersonAsync(
         Guid personId,
         CancellationToken cancellationToken = default)
     {
@@ -135,7 +147,7 @@ public abstract class Client
         }
 
         var stream = await response.Content.ReadAsStreamAsync(cancellationToken);
-        var person = await DeserializeAsync<PersonForCSharp?>(stream, cancellationToken);
+        var person = await DeserializeAsync<PersonForCSharp>(stream, cancellationToken);
 
         return person ?? null;
     }
@@ -222,4 +234,37 @@ public class MemoryPackClient : Client
     {
         return await MemoryPackSerializer.DeserializeAsync<T>(stream, cancellationToken: cancellationToken);
     }
+}
+
+public class HttpsClientHandlerService
+{
+    public HttpMessageHandler GetPlatformMessageHandler()
+    {
+#if ANDROID
+        var handler = new HttpClientHandler();
+        handler.ServerCertificateCustomValidationCallback = (message, cert, chain, errors) =>
+        {
+            if (cert.Issuer.Equals("CN=localhost"))
+                return true;
+            return errors == System.Net.Security.SslPolicyErrors.None;
+        };
+        return handler;
+#elif IOS
+        var handler = new NSUrlSessionHandler
+        {
+            TrustOverrideForUrl = IsHttpsLocalhost
+        };
+
+        return handler;
+#else
+     throw new PlatformNotSupportedException("Only Android and iOS supported.");
+#endif
+    }
+
+#if IOS
+    public bool IsHttpsLocalhost(NSUrlSessionHandler sender, string url, Security.SecTrust trust)
+    {
+        return true;
+    }
+#endif
 }

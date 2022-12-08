@@ -15,6 +15,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "sandbox", "sandbox", "{83AD
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Console", "sandbox\Console\Console.csproj", "{4C5C6A50-2D07-475A-A10D-42557F428C2F}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Mobile", "src\Mobile\Mobile.csproj", "{5113E675-B20D-4985-90B4-6E1B1088325B}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -37,6 +39,12 @@ Global
 		{4C5C6A50-2D07-475A-A10D-42557F428C2F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4C5C6A50-2D07-475A-A10D-42557F428C2F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4C5C6A50-2D07-475A-A10D-42557F428C2F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5113E675-B20D-4985-90B4-6E1B1088325B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5113E675-B20D-4985-90B4-6E1B1088325B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5113E675-B20D-4985-90B4-6E1B1088325B}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+		{5113E675-B20D-4985-90B4-6E1B1088325B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5113E675-B20D-4985-90B4-6E1B1088325B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5113E675-B20D-4985-90B4-6E1B1088325B}.Release|Any CPU.Deploy.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -46,6 +54,7 @@ Global
 		{4736C95D-7F60-48D4-ABC8-D8688202D84A} = {3A761073-CE2A-4AF1-933F-FAE5833CBC15}
 		{A1606D6B-64B5-426A-9E6D-095FC81EB033} = {3A761073-CE2A-4AF1-933F-FAE5833CBC15}
 		{4C5C6A50-2D07-475A-A10D-42557F428C2F} = {83ADDD15-869E-45C8-9AE7-D88B08EAA28E}
+		{5113E675-B20D-4985-90B4-6E1B1088325B} = {3A761073-CE2A-4AF1-933F-FAE5833CBC15}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {C92F6002-80CD-4FF3-873D-7443421EAF42}
